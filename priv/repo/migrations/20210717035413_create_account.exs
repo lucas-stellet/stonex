@@ -13,6 +13,5 @@ defmodule Stonex.Repo.Migrations.CreateAccount do
       timestamps()
     end
 
-    create unique_index(:accounts, :number)
   end
 end
