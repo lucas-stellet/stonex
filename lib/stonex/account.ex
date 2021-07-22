@@ -2,6 +2,7 @@ defmodule Stonex.Account do
   @moduledoc """
   Creates a new bank account.
   """
+  alias Stonex.Repo
   use Ecto.Schema
   import Ecto.Changeset
 
