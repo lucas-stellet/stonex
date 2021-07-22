@@ -30,6 +30,6 @@ defmodule Stonex.Account do
   @spec changeset(map) :: %Ecto.Changeset{}
   def changeset(params) do
     %__MODULE__{}
-    |> cast(params, [:number, :digit])
+    |> cast(params, [:number, :digit, :user_id])
   end
 end
