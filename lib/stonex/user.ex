@@ -37,8 +37,6 @@ defmodule Stonex.User do
     %__MODULE__{}
     |> cast(params, @required_fields)
     |> validate_required(@required_fields)
-    |> unique_constraint(:email, name: :users_email_index)
-    |> unique_constraint(:document, name: :users_document_index)
     |> validate_format(:email, ~r/@/, message: "invalid format")
     |> validate_format(:document, ~r/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)
     |> validate_length(:password,
@@ -46,7 +44,6 @@ defmodule Stonex.User do
       max: 6,
       message: "password has to be between 6 and 15 characters. "
     )
-    |> unique_constraint(:email, message: "e-mail account already registered")
     |> update_change(:email, &String.downcase(&1))
     |> update_change(:first_name, &String.capitalize(&1))
     |> update_change(:last_name, &String.capitalize(&1))
