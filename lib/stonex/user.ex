@@ -20,7 +20,7 @@ defmodule Stonex.User do
     field :password_hash, :string
     field :role, Ecto.Enum, values: [:admin, :client], default: :client
 
-    has_one :accounts, Stonex.Account
+    has_one :account, Stonex.Account
 
     timestamps()
   end
