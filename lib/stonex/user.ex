@@ -37,6 +37,8 @@ defmodule Stonex.User do
     %__MODULE__{}
     |> cast(params, @required_fields)
     |> validate_required(@required_fields)
+    |> unique_constraint(:email, name: :users_email_index)
+    |> unique_constraint(:document, name: :users_document_index)
     |> validate_format(:email, ~r/@/, message: "invalid format")
     |> validate_format(:document, ~r/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)
     |> validate_length(:password,
