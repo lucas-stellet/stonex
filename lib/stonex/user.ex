@@ -18,7 +18,7 @@ defmodule Stonex.User do
     field :document, :string
     field :password, :string, virtual: true
     field :password_hash, :string
-    field :role, Ecto.Enum, values: [:admin, :client]
+    field :role, Ecto.Enum, values: [:admin, :client], default: :client
 
     has_one :accounts, Stonex.Account
 
