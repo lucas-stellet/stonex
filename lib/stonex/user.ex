@@ -48,6 +48,8 @@ defmodule Stonex.User do
     )
     |> unique_constraint(:email, message: "e-mail account already registered")
     |> update_change(:email, &String.downcase(&1))
+    |> update_change(:first_name, &String.capitalize(&1))
+    |> update_change(:last_name, &String.capitalize(&1))
     |> put_password_hash()
   end
 
