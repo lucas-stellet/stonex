@@ -2,7 +2,6 @@ defmodule Stonex.Account do
   @moduledoc """
   Creates a new bank account.
   """
-  alias Stonex.Repo
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -30,6 +29,12 @@ defmodule Stonex.Account do
   @spec changeset(map) :: %Ecto.Changeset{}
   def changeset(params) do
     %__MODULE__{}
-    |> cast(params, [:number, :digit, :user_id])
+    |> cast(merge_number_branch_digit_account(params), [:user_id, :number, :digit])
+  end
+
+  defp merge_number_branch_digit_account(map) do
+    map
+    |> Map.put(:number, Integer.to_string(Enum.random(100_000..999_999)))
+    |> Map.put(:digit, Integer.to_string(Enum.random(1..9)))
   end
 end
