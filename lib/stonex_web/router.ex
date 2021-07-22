@@ -7,6 +7,10 @@ defmodule StonexWeb.Router do
 
   scope "/api", StonexWeb do
     pipe_through :api
+
+    scope "/account" do
+      post "/signup", AccountController, :create
+    end
   end
 
   # Enables LiveDashboard only for development
