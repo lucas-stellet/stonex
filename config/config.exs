@@ -19,6 +19,15 @@ config :stonex, StonexWeb.Endpoint,
   pubsub_server: Stonex.PubSub,
   live_view: [signing_salt: "HRYNmytw"]
 
+config :stonex, StonexWeb.Auth.Guardian,
+  issuer: "stonex",
+  ttl: {30, :minutes},
+  secret_key: System.get_env("GUARDIAN_SECRET")
+
+config :stonex, StonexWeb.Auth.Pipeline,
+  module: StonexWeb.Auth.Guardian,
+  error_handler: StonexWeb.Auth.ErrorHandler
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
