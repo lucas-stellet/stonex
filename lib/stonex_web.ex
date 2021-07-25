@@ -24,6 +24,7 @@ defmodule StonexWeb do
       import Plug.Conn
       import StonexWeb.Gettext
       alias StonexWeb.Router.Helpers, as: Routes
+      import Guardian.Plug, only: [current_resource: 1]
     end
   end
 
