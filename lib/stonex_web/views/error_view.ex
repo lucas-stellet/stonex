@@ -10,8 +10,6 @@ defmodule StonexWeb.ErrorView do
   end
 
   def render("error.json", %{reason: message}) do
-    IO.inspect(message)
-
     %{
       error: %{
         details: message
