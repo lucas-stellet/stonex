@@ -46,7 +46,9 @@ defmodule Stonex.MixProject do
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:argon2_elixir, "~> 2.0"},
       {:guardian, "~> 2.0"},
-      {:decimal, "~> 2.0"}
+      {:decimal, "~> 2.0"},
+      {:poison, "~> 5.0"},
+      {:timex, "~> 3.0"}
     ]
   end
 
