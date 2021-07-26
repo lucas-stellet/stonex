@@ -26,10 +26,17 @@ defmodule Stonex.Account do
     |> apply_action(:insert)
   end
 
-  @spec changeset(map) :: %Ecto.Changeset{}
-  def changeset(params) do
-    %__MODULE__{}
-    |> cast(merge_number_branch_digit_account(params), [:user_id, :number, :digit])
+  def changeset(params),
+    do: create_changeset(%__MODULE__{}, merge_number_branch_digit_account(params))
+
+  def changeset(account, params) do
+    create_changeset(account, params)
+  end
+
+  @spec create_changeset(struct, map) :: %Ecto.Changeset{}
+  defp create_changeset(account, params) do
+    account
+    |> cast(params, [:user_id, :number, :digit])
   end
 
   defp merge_number_branch_digit_account(map) do
