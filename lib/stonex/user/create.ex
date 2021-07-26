@@ -23,17 +23,19 @@ defmodule Stonex.User.Create do
   defp create_user({:error, _changeset} = error), do: error
 
   defp find_user(params) do
-    case Stonex.get_user(convert_params(params)) do
-      {:error, "User not found"} ->
+    case Repo.get_by(User, convert(params)) do
+      nil ->
         :user_not_exist
 
-      {:ok, _user} ->
+      _user ->
         :user_already_exists
     end
   end
 
-  def convert_params(map) do
-    Enum.map(map, fn {key, value} -> {String.to_existing_atom(key), value} end)
+  defp convert(params) when is_map(params) do
+    Enum.map(params, fn {key, value} -> {String.to_existing_atom(key), value} end)
     |> Keyword.delete(:password)
   end
+
+  defp convert(params), do: params
 end

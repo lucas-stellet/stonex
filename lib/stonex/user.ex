@@ -41,8 +41,8 @@ defmodule Stonex.User do
     |> validate_format(:document, ~r/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)
     |> validate_length(:password,
       min: 6,
-      max: 6,
-      message: "password has to be between 6 and 15 characters. "
+      max: 8,
+      message: "password has to be between 6 and 8 characters. "
     )
     |> update_change(:email, &String.downcase(&1))
     |> update_change(:first_name, &String.capitalize(&1))
