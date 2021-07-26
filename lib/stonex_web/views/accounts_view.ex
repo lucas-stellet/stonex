@@ -11,7 +11,8 @@ defmodule StonexWeb.AccountView do
             first_name: first_name,
             last_name: last_name
           }
-        }
+        },
+        token: token
       }) do
     %{
       message: "Account created!",
@@ -21,7 +22,8 @@ defmodule StonexWeb.AccountView do
         digit: digit,
         balance: balance,
         account_owner: first_name <> " " <> last_name
-      }
+      },
+      token: token
     }
   end
 end
