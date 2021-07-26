@@ -18,6 +18,25 @@ defmodule StonexWeb.Router do
 
     scope "/account" do
       post "/signup", AccountController, :create
+      post "/login", AuthController, :login
+    end
+
+    scope "/backoffice" do
+      post "/login", AuthController, :backoffice_login
+    end
+  end
+
+  scope "/api", StonexWeb do
+    pipe_through [:api, :auth, :bodyguard]
+
+    scope "/transaction" do
+      post "/transfer", TransactionController, :transfer
+      post "/withdraw", TransactionController, :withdraw
+    end
+
+    scope "/backoffice" do
+      post "/user", BackofficeController, :create
+      get "/reports", BackofficeController, :reports
     end
   end
 
