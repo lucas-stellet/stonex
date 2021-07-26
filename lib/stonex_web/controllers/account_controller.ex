@@ -4,20 +4,15 @@ defmodule StonexWeb.AccountController do
   action_fallback StonexWeb.FallbackController
 
   alias Stonex.Repo
+  alias StonexWeb.Auth.Guardian
 
   def create(conn, params) do
-    with {:ok, %{id: user_id}} <- Stonex.create_user(params) do
-      %{user_id: user_id}
-      |> Stonex.create_account()
-      |> handle_response(conn, "create.json", :created)
+    with {:ok, %{id: user_id} = user} <- Stonex.create_user(params),
+         {:ok, token, _claims} <- Guardian.encode_and_sign(user),
+         {:ok, account} <- Stonex.create_account(%{user_id: user_id}) do
+      conn
+      |> put_status(:created)
+      |> render("create.json", %{account: Repo.preload(account, :user), token: token})
     end
   end
-
-  defp handle_response({:ok, account}, conn, view, status) do
-    conn
-    |> put_status(status)
-    |> render(view, account: Repo.preload(account, :user))
-  end
-
-  defp handle_response({:error, _changeset} = error, _conn, _view, _status), do: error
 end
