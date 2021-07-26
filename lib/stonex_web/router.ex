@@ -5,6 +5,14 @@ defmodule StonexWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug StonexWeb.Auth.Pipeline
+  end
+
+  pipeline :bodyguard do
+    plug StonexWeb.BodyGuard
+  end
+
   scope "/api", StonexWeb do
     pipe_through :api
 
