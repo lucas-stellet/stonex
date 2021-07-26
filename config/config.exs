@@ -22,7 +22,11 @@ config :stonex, StonexWeb.Endpoint,
 config :stonex, StonexWeb.Auth.Guardian,
   issuer: "stonex",
   ttl: {30, :minutes},
-  secret_key: System.get_env("GUARDIAN_SECRET")
+  secret_key:
+    System.get_env(
+      "GUARDIAN_SECRET",
+      "UaE9J9jqkLcBcV46r+WihLKwNea5HLz+X2eo3ij4CYBuelnEQo3eXi1QEIp4PzC2"
+    )
 
 config :stonex, StonexWeb.Auth.Pipeline,
   module: StonexWeb.Auth.Guardian,
