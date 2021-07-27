@@ -9,9 +9,6 @@ defmodule Stonex.Backoffice.Reports do
 
   @transaction_status "done"
 
-  def call(%{type: "range"}),
-    do: {:error, "Reports of type range needs of a from and to dates."}
-
   def call(%{type: "range", from: "", to: ""}),
     do: {:error, "Reports of type range needs of a from and to datas."}
 

@@ -12,4 +12,12 @@ defmodule StonexWeb.BackofficeView do
       data: report
     }
   end
+
+  def render("error_report.json", %{reason: reason}) do
+    %{
+      error: %{
+        reason: reason
+      }
+    }
+  end
 end

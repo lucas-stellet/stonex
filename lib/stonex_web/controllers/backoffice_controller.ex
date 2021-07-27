@@ -19,6 +19,12 @@ defmodule StonexWeb.BackofficeController do
     end
   end
 
+  def reports(conn, %{"type" => "range"}) do
+    conn
+    |> put_status(400)
+    |> render("error_report.json", %{reason: "Missing 'from' and 'to' params."})
+  end
+
   def reports(conn, %{"type" => type}) do
     with {:ok, report} <- Stonex.get_reports(%{type: type, from: nil, to: nil}) do
       conn
