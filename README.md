@@ -4,7 +4,7 @@
 
 A API está disponível no endereço abaixo:
 
-[stonex.jaspion.xyz](http://stonex.jaspion.xyz)
+[stonex.jaspion.xyz/api](http://stonex.jaspion.xyz/api)
 
 Para facilitar o acesso, alguns usuários e suas respectivas contas, exceto usuários do backoffice, foram criados. Assim como transações do tipo saque ou retirada, que foram persistidas em períodos distintos para ter a possibilidade de visualização de relatórios.
 
