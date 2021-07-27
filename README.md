@@ -15,6 +15,11 @@ Para facilitar o acesso, alguns usuários e suas respectivas contas, exceto usu�
   "email": "iron_man@gmail.com",
   "password": "10203040",
   "document": "001.002.003-04"
+  "account": {
+      "number": "384030",
+      "branch": "0001",
+      "digit": "3"
+  }
 }
 
 {
@@ -22,7 +27,12 @@ Para facilitar o acesso, alguns usuários e suas respectivas contas, exceto usu�
   "last_name": "Parker",
   "email": "spider-Man@gmail.com",
   "password": "50607080",
-  "document": "005.006.007-08"
+  "document": "005.006.007-08",
+  "account": {
+      "number": "994427",
+      "branch": "0001",
+      "digit": "9"
+  }
 }
 
 {
@@ -124,11 +134,15 @@ Exemplo de requisição
 Exemplo da resposta
 
 {
-    "first_name": "Bruce",
-    "last_name": "Banner",
-    "email": "the_hulk@gmail.com",
-    "password": "147852", // Senha entre 6 e 8 caracteres
-    "document": "001.002.003-04" // CPF deve ter pontos e virgulas
+    "account": {
+        "account_owner": "Bruce Banner",
+        "balance": 1000,
+        "branch": "0001",
+        "digit": "9",
+        "number": "709553"
+    },
+    "message": "Account created!",
+    "token": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9..."
 }
 ```
 
