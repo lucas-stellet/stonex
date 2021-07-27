@@ -9,6 +9,9 @@ defmodule Stonex.Backoffice.Reports do
 
   @transaction_status "done"
 
+  def call(%{type: "range", from: "", to: ""}),
+    do: {:error, "Reports of type range needs of a from and to datas."}
+
   def call(%{type: "range", from: from_date, to: to_date}),
     do: Range.send(@transaction_status, from_date, to_date)
 
@@ -16,4 +19,5 @@ defmodule Stonex.Backoffice.Reports do
   def call(%{type: "monthly", from: _, to: _}), do: Monthly.send(@transaction_status)
   def call(%{type: "annual", from: _, to: _}), do: Annual.send(@transaction_status)
   def call(%{type: "total", from: _, to: _}), do: Total.send(@transaction_status)
+  def call(%{type: type, from: _, to: _}), do: {:error, "Report #{type} is not available"}
 end
