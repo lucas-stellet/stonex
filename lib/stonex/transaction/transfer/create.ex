@@ -10,7 +10,9 @@ defmodule Stonex.Transaction.Transfer.Create do
   def call(params) do
     with {:ok, validated_transfer_data} <-
            check_if_requester_account_balance_is_zero(:transfer, params),
-         {:ok, tranfer_data} <- validate_beneficiary(validated_transfer_data),
+         {:ok, requester_different_transfer_data} <-
+           check_if_requester_is_equal_beneficiary(validated_transfer_data),
+         {:ok, tranfer_data} <- validate_beneficiary(requester_different_transfer_data),
          {:ok, validated_transfer} <-
            validate_transferable_balance(tranfer_data),
          [beneficiary_changeset, requester_changeset] <-
@@ -52,6 +54,18 @@ defmodule Stonex.Transaction.Transfer.Create do
 
           {:error, "Account informations are not valid!"}
       end
+    end
+  end
+
+  defp check_if_requester_is_equal_beneficiary(
+         %{
+           "document" => beneficiary_document,
+           "requester_info" => %{"document" => requester_dcument}
+         } = params
+       ) do
+    case requester_dcument == beneficiary_document do
+      true -> {:error, "Not is possible transfer money to yourself. "}
+      false -> {:ok, params}
     end
   end
 
