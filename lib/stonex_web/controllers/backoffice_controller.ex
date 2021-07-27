@@ -20,7 +20,7 @@ defmodule StonexWeb.BackofficeController do
   end
 
   def reports(conn, %{"type" => type}) do
-    with {:ok, report} <- Stonex.get_reports(%{type: type, from: nil, to: Nil}) do
+    with {:ok, report} <- Stonex.get_reports(%{type: type, from: nil, to: nil}) do
       conn
       |> put_status(:ok)
       |> render("report.json", %{report: report})
