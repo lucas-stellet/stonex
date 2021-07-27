@@ -44,7 +44,8 @@ defmodule StonexWeb.TransactionController do
            id: id,
            balance: balance,
            account_id: account_id,
-           email: email
+           email: email,
+           document: document
          },
          initial_data
        ) do
@@ -53,7 +54,8 @@ defmodule StonexWeb.TransactionController do
         "id" => id,
         "balance" => balance,
         "account_id" => account_id,
-        "email" => email
+        "email" => email,
+        "document" => document
       }
     })
   end
