@@ -1,4 +1,8 @@
 defmodule Stonex.Backoffice.Reports.Daily do
+  @moduledoc """
+  Daily é um módulo com o intuito de apresentar
+  uma interface mais simplificada para apresentar relatórios no dia atual.
+  """
   alias Stonex.Repo
 
   def send(status) do

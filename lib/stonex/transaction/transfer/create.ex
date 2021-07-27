@@ -1,4 +1,8 @@
 defmodule Stonex.Transaction.Transfer.Create do
+  @moduledoc """
+  Create é um módulo com o intuito de apresentar
+  uma interface mais simplificada para criar uma transação do tipo `transfer`.
+  """
   alias Stonex.Repo
   alias Ecto.Multi
   import Stonex.Transaction.Helpers

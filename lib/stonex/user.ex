@@ -1,7 +1,6 @@
 defmodule Stonex.User do
   @moduledoc """
-  User cria um usuário sendo que, podendo ser tanto um usuário comum (`role`: `admin`)`client,
-  quanto um usuário do backoffice (`role`: `admin`).
+  Schema de usuário.
   """
 
   use Ecto.Schema
@@ -25,6 +24,10 @@ defmodule Stonex.User do
     timestamps()
   end
 
+  @doc """
+  Builda um usuário com as informações fornecidas e devolve um `changeset`
+  já validado.
+  """
   @spec build(map) :: {:ok, %Ecto.Changeset{}} | {:error, %Ecto.Changeset{}}
   def build(params) do
     params

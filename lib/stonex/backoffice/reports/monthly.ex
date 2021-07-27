@@ -1,4 +1,8 @@
 defmodule Stonex.Backoffice.Reports.Monthly do
+  @moduledoc """
+  Monthly é um módulo com o intuito de apresentar
+  uma interface mais simplificada para apresentar relatórios no mês atual.
+  """
   alias Stonex.Repo
 
   def send(status) do

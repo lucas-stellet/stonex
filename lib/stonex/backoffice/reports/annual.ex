@@ -1,4 +1,8 @@
 defmodule Stonex.Backoffice.Reports.Annual do
+  @moduledoc """
+  Anual é um módulo com o intuito de apresentar
+  uma interface mais simplificada para apresentar relatórios no ano atual.
+  """
   alias Stonex.Repo
 
   def send(status) do

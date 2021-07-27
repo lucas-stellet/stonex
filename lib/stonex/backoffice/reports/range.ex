@@ -1,4 +1,10 @@
 defmodule Stonex.Backoffice.Reports.Range do
+  @moduledoc """
+  Range é um módulo com o intuito de apresentar
+  uma interface mais simplificada para apresentar
+  relatórios com período personalizado.
+  """
+
   alias Stonex.Repo
 
   def send(status, from_date, to_date) do

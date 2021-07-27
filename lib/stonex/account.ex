@@ -1,6 +1,6 @@
 defmodule Stonex.Account do
   @moduledoc """
-  Creates a new bank account.
+  Schema de uma conta bancária.
   """
   use Ecto.Schema
   import Ecto.Changeset
@@ -19,6 +19,10 @@ defmodule Stonex.Account do
     timestamps()
   end
 
+  @doc """
+  Builda uma conta bancária com as informações fornecidas e devolve um `changeset`
+  já validado.
+  """
   @spec build(map) :: {:ok, %Ecto.Changeset{}} | {:error, %Ecto.Changeset{}}
   def build(params) do
     params

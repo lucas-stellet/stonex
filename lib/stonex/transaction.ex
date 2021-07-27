@@ -1,5 +1,7 @@
 defmodule Stonex.Transaction do
   @moduledoc """
+  Schema de uma `transaction` podendo ser tanto uo tipo saque(`withdraw`)
+  quanto do tipo transferência(`transfer`)
   Creates a new `transaction`: `withdraw` or `transfer`.
   """
   use Ecto.Schema
@@ -23,6 +25,10 @@ defmodule Stonex.Transaction do
     timestamps(updated_at: false)
   end
 
+  @doc """
+  Builda uma transação com as informações fornecidas e devolve um `changeset`
+  já validado.
+  """
   @spec build(map) :: {:ok, %Ecto.Changeset{}} | {:error, %Ecto.Changeset{}}
   def build(params) do
     params

@@ -1,7 +1,7 @@
 defmodule Stonex.User.Get do
   @moduledoc """
-  Get é um módulo do tipo facade com o intuito de apresentar
-  uma interface mais simplificada para list um usuarios.
+  Get é um módulo com o intuito de apresentar
+  uma interface mais simplificada para listar um usuario pelo seu `id`s.
   """
   alias Stonex.User
   alias Stonex.Repo

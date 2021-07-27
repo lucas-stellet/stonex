@@ -1,4 +1,10 @@
 defmodule Stonex.Backoffice.Reports do
+  @moduledoc """
+  Reports é uma interface que reune todas os tipos de relatórios e
+  encaminha cada um de acordo com o tipo solicitado pelo usuário através
+  dos parametros recebidos pelo `controller`.
+  """
+
   alias Stonex.Backoffice.Reports.{Daily, Monthly, Annual, Total, Range}
 
   @transaction_status "done"

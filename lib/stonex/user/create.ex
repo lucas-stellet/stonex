@@ -1,6 +1,6 @@
 defmodule Stonex.User.Create do
   @moduledoc """
-  Create é um módulo do tipo facade com o intuito de apresentar
+  Create é um módulo com  o intuito de apresentar
   uma interface mais simplicada na criação de novos usuarios.
   """
 

@@ -1,4 +1,9 @@
 defmodule Stonex.Transaction.Withdraw.Create do
+  @moduledoc """
+  Create é um módulo com o intuito de apresentar
+  uma interface mais simplificada para criar uma transação do tipo `widhdraw`.
+  """
+
   alias Stonex.Repo
   alias Ecto.Multi
   import Stonex.Transaction.Helpers
