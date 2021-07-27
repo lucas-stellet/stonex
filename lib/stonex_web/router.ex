@@ -16,6 +16,8 @@ defmodule StonexWeb.Router do
   scope "/api", StonexWeb do
     pipe_through :api
 
+    get "/", WelcomeController, :hello
+
     scope "/account" do
       post "/signup", AccountController, :create
       post "/login", AuthController, :login
