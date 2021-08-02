@@ -9,7 +9,7 @@ defmodule Stonex.Transaction.Helpers do
         type,
         %{"requester_info" => %{"balance" => balance}} = params
       ) do
-    case Decimal.to_integer(balance) == 0 do
+    case Decimal.gt?(balance, 0) do
       true ->
         insert_transaction(
           type,
