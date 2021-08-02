@@ -10,7 +10,7 @@ defmodule Stonex.Transaction.Helpers do
         %{"requester_info" => %{"balance" => balance}} = params
       ) do
     case Decimal.gt?(balance, 0) do
-      true ->
+      false ->
         insert_transaction(
           type,
           Map.put(params, "id", params["requester_info"]["id"]),
@@ -20,7 +20,7 @@ defmodule Stonex.Transaction.Helpers do
 
         {:error, "Transaction not allowed. Your account balance is eqaal zero. "}
 
-      false ->
+      true ->
         {:ok, params}
     end
   end
