@@ -185,7 +185,7 @@ Exemplo de requisição
         "digit": "2"
     },
     "document": "005.006.007-08",
-    "value": 100.00 // Padrões permitidios: "100.00", 100.00, 100
+    "value": "100.00" // Padrao permitido: "100.00"
 }
 ```
 
