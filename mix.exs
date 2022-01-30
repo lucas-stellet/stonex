@@ -48,7 +48,8 @@ defmodule Stonex.MixProject do
       {:guardian, "~> 2.0"},
       {:decimal, "~> 2.0"},
       {:poison, "~> 5.0"},
-      {:timex, "~> 3.0"}
+      {:timex, "~> 3.0"},
+      {:ex_machina, "~> 2.7.0"}
     ]
   end
 
