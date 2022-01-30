@@ -1,11 +1,11 @@
-use Mix.Config
+import Config
 
 # Configure your database
 config :stonex, Stonex.Repo,
   username: "postgres",
   password: "postgres",
   database: "stonex_dev",
-  hostname: "db",
+  hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
