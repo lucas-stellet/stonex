@@ -10,7 +10,14 @@ defmodule Stonex.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -20,7 +27,7 @@ defmodule Stonex.MixProject do
   def application do
     [
       mod: {Stonex.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ex_machina]
     ]
   end
 
@@ -49,7 +56,8 @@ defmodule Stonex.MixProject do
       {:decimal, "~> 2.0"},
       {:poison, "~> 5.0"},
       {:timex, "~> 3.0"},
-      {:ex_machina, "~> 2.7.0"}
+      {:ex_machina, "~> 2.7.0", only: :test},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 
