@@ -2,7 +2,7 @@ defmodule Stonex.Factory do
   use ExMachina.Ecto, repo: Stonex.Repo
 
   alias Stonex.Accounts.Account
-  alias Stonex.User
+  alias Stonex.Users.User
 
   def account_factory do
     %Account{
@@ -15,11 +15,11 @@ defmodule Stonex.Factory do
 
   def user_factory do
     %User{
-      first_name: "Tony",
-      last_name: "Stark",
-      email: "iron_man@gmail.com",
-      password: "10203040",
-      document: "001.002.003-04"
+      first_name: Faker.Person.first_name(),
+      last_name: Faker.Person.last_name(),
+      email: Faker.Internet.email(),
+      password: Faker.Util.format("%2a%2A%4d"),
+      document: Faker.Util.format("%3d.%3d.%3d-%2d")
     }
   end
 end
