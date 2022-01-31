@@ -4,7 +4,7 @@ alias Stonex.Repo
 # Cria o usuário Tony Stark e a conta bancária
 
 {:ok, %{id: tony_stark_id}} =
-  Stonex.create_user(%{
+  Stonex.Users.create_user(%{
     "first_name" => "Tony",
     "last_name" => "Stark",
     "email" => "iron_man@gmail.com",
@@ -12,12 +12,12 @@ alias Stonex.Repo
     "document" => "001.002.003-04"
   })
 
-{:ok, %{id: tony_stark_account_id}} = Stonex.create_account(%{user_id: tony_stark_id})
+{:ok, %{id: tony_stark_account_id}} = Stonex.Accounts.create_account(%{user_id: tony_stark_id})
 
 # Cria o usuário Peter Park e a conta bancária
 
 {:ok, %{id: peter_parker_id}} =
-  Stonex.create_user(%{
+  Stonex.Users.create_user(%{
     "first_name" => "Peter",
     "last_name" => "Parker",
     "email" => "spider-Man@gmail.com",
@@ -25,11 +25,12 @@ alias Stonex.Repo
     "document" => "005.006.007-08"
   })
 
-{:ok, %{id: peter_parker_account_id}} = Stonex.create_account(%{user_id: peter_parker_id})
+{:ok, %{id: peter_parker_account_id}} =
+  Stonex.Accounts.create_account(%{user_id: peter_parker_id})
 
 # Cria o usuário admin Nick fury
 
-Stonex.create_user(%{
+Stonex.Users.create_user(%{
   "first_name" => "Nick",
   "last_name" => "Fury",
   "email" => "nick@shield.com",
@@ -107,10 +108,10 @@ Repo.insert!(t5)
 
 # Atualiza as contas do Peter Parker e do Tony Stark
 
-tony_updated_account = Stonex.update_account(%{id: tony_stark_account_id, balance: 580.00})
+# tony_updated_account = Stonex.update_account(%{id: tony_stark_account_id, balance: 580.00})
 
-Repo.update!(tony_updated_account)
+# Repo.update!(tony_updated_account)
 
-peter_updated_account = Stonex.update_account(%{id: peter_parker_account_id, balance: 1420.00})
+# peter_updated_account = Stonex.update_account(%{id: peter_parker_account_id, balance: 1420.00})
 
-Repo.update!(peter_updated_account)
+# Repo.update!(peter_updated_account)

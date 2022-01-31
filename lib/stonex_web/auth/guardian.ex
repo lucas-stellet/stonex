@@ -2,7 +2,8 @@ defmodule StonexWeb.Auth.Guardian do
   use Guardian, otp_app: :stonex
 
   alias Stonex
-  alias Stonex.User
+  alias Stonex.Users
+  alias Stonex.Users.User
 
   def subject_for_token(user, _claims) do
     sub = to_string(user.id)
@@ -13,13 +14,13 @@ defmodule StonexWeb.Auth.Guardian do
     user =
       claims
       |> Map.get("sub")
-      |> Stonex.get_user()
+      |> Users.get_user_by_id()
 
     {:ok, user}
   end
 
   def authenticate(%{"document" => document, "password" => password}) do
-    case Stonex.get_user_by_document(document) do
+    case Users.get_user_by(%{document: document}) do
       {:error, _} ->
         {:error, "Account not found!"}
 
@@ -29,7 +30,7 @@ defmodule StonexWeb.Auth.Guardian do
   end
 
   def backoffice_authenticate(%{"document" => document, "password" => password}) do
-    with {:ok, user} <- Stonex.get_user_by_document(document),
+    with {:ok, user} <- Users.get_user_by(%{document: document}),
          {:ok, _user_admin} <- validate_admin_role(user) do
       validate_password(user, password)
     end

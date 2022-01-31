@@ -27,7 +27,7 @@ defmodule Stonex.MixProject do
   def application do
     [
       mod: {Stonex.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ex_machina]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -57,7 +57,8 @@ defmodule Stonex.MixProject do
       {:poison, "~> 5.0"},
       {:timex, "~> 3.0"},
       {:ex_machina, "~> 2.7.0", only: :test},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
+      {:faker, "~> 0.17", only: :test}
     ]
   end
 

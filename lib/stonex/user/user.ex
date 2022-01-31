@@ -1,6 +1,6 @@
-defmodule Stonex.User do
+defmodule Stonex.Users.User do
   @moduledoc """
-  Schema de usuário.
+  User schema module.
   """
 
   use Ecto.Schema
@@ -19,14 +19,14 @@ defmodule Stonex.User do
     field :password_hash, :string
     field :role, Ecto.Enum, values: [:admin, :client], default: :client
 
-    has_one :account, Stonex.Account
+    has_one :account, Stonex.Accounts.Account
 
     timestamps()
   end
 
   @doc """
-  Builda um usuário com as informações fornecidas e devolve um `changeset`
-  já validado.
+  Build a user with the given information and returns a validated `changeset`.
+
   """
   @spec build(map) :: {:ok, %Ecto.Changeset{}} | {:error, %Ecto.Changeset{}}
   def build(params) do
@@ -36,12 +36,12 @@ defmodule Stonex.User do
   end
 
   @spec changeset(map) :: %Ecto.Changeset{}
-  def changeset(params) do
-    %__MODULE__{}
+  def changeset(user \\ %__MODULE__{}, params) do
+    user
     |> cast(params, @required_fields)
     |> validate_required(@required_fields)
     |> validate_format(:email, ~r/@/, message: "invalid format")
-    |> validate_format(:document, ~r/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/)
+    |> validate_format(:document, ~r/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/, message: "invalid format")
     |> validate_length(:password,
       min: 6,
       max: 8,

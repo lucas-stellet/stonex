@@ -57,7 +57,7 @@ defmodule Stonex.AccountsTest do
     end
 
     test "expects returns a {:ok, account} when pass a valid map attributes", %{
-      user: %Stonex.User{id: user_id}
+      user: %Stonex.Users.User{id: user_id}
     } do
       assert {:ok, %Account{} = account} = Accounts.create_account(%{user_id: user_id})
 

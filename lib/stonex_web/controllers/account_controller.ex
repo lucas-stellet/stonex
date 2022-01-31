@@ -5,11 +5,13 @@ defmodule StonexWeb.AccountController do
 
   alias Stonex.Repo
   alias StonexWeb.Auth.Guardian
+  alias Stonex.Users
+  alias Stonex.Accounts
 
   def create(conn, params) do
-    with {:ok, %{id: user_id} = user} <- Stonex.create_user(params),
+    with {:ok, %{id: user_id} = user} <- Users.create_user(params),
          {:ok, token, _claims} <- Guardian.encode_and_sign(user),
-         {:ok, account} <- Stonex.create_account(%{user_id: user_id}) do
+         {:ok, account} <- Accounts.create_account(%{user_id: user_id}) do
       conn
       |> put_status(:created)
       |> render("create.json", %{account: Repo.preload(account, :user), token: token})
