@@ -1,6 +1,6 @@
 defmodule Stonex.Transaction.Helpers do
   @moduledoc """
-  Helpeers possui funções que auxiliam na criação de transações de ambos os tipos.
+  Function helpers for transactions.
   """
   alias Stonex.Transaction
   alias Stonex.Repo

@@ -1,6 +1,6 @@
 defmodule Stonex.Accounts.Account do
   @moduledoc """
-  Schema de uma conta bancária.
+  Schema for account.
   """
   use Ecto.Schema
 
@@ -15,7 +15,7 @@ defmodule Stonex.Accounts.Account do
     field :branch, :string, default: "1000"
     field :digit, :string
 
-    belongs_to :user, Stonex.User
+    belongs_to :user, Stonex.Users.User
 
     timestamps()
   end

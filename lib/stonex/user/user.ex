@@ -1,6 +1,6 @@
 defmodule Stonex.Users.User do
   @moduledoc """
-  User schema module.
+  Schema for user.
   """
 
   use Ecto.Schema
