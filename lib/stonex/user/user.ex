@@ -27,8 +27,10 @@ defmodule Stonex.Users.User do
   @doc """
   Build a user with the given information and returns a validated `changeset`.
 
+  ## Parameters
+  ```attrs```- The attributes to create the user with.
   """
-  @spec build(map) :: {:ok, %Ecto.Changeset{}} | {:error, %Ecto.Changeset{}}
+  @spec build(map) :: {:ok, Ecto.Schema.t()} | {:error, Ecto.Schema.t()}
   def build(params) do
     params
     |> changeset()

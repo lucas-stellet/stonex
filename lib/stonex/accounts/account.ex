@@ -26,7 +26,7 @@ defmodule Stonex.Accounts.Account do
   ## Parameters
   ```attrs```- The attributes to create the account with.
   """
-  @spec build(map) :: {:ok, %Ecto.Changeset{}} | {:error, %Ecto.Changeset{}}
+  @spec build(map) :: {:ok, Ecto.Schema.t()} | {:error, Ecto.Schema.t()}
   def build(attrs) do
     attrs
     |> changeset()
