@@ -5,7 +5,7 @@ defmodule Stonex.Transaction.Helpers do
   alias Stonex.Transaction
   alias Stonex.Repo
 
-  def check_if_requester_account_balance_is_zero(
+  def requester_account_balance_is_zero(
         type,
         %{"requester_info" => %{"balance" => balance}} = params
       ) do

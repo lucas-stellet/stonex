@@ -11,7 +11,7 @@ defmodule Stonex.Transaction.Withdraw.Create do
 
   def call(params) do
     with {:ok, validated_withdraw_data} <-
-           check_if_requester_account_balance_is_zero(:withdraw, params),
+           requester_account_balance_is_zero(:withdraw, params),
          {:ok, validated_withdraw} <- validate_withdrawable_balance(validated_withdraw_data),
          {:ok, requester_changeset} <- create_updated_account_changeset(validated_withdraw) do
       Multi.new()
