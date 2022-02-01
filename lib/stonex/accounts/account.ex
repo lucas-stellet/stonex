@@ -12,7 +12,7 @@ defmodule Stonex.Accounts.Account do
   schema "accounts" do
     field :balance, :decimal, precision: 10, scale: 2, default: 1000
     field :number, :string
-    field :branch, :string, default: "1000"
+    field :branch, :string, default: "0001"
     field :digit, :string
 
     belongs_to :user, Stonex.Users.User
