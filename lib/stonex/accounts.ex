@@ -60,11 +60,11 @@ defmodule Stonex.Accounts do
 
   ## Examples
 
-      iex> Stonex.Account.get_account_by(%{name: "John Doe"})
-      {:ok, %User{}}
+      iex> Stonex.Account.get_account_by(%{number: 795686})
+      {:ok, %Account{}}
 
-      iex> Stonex.Account.get_account_by(%{name: "Unknown Person"})
-      {:error, "No user found}
+      iex> Stonex.Account.get_account_by(%{number: 000000})
+      {:error, "No account found}
 
   """
   @spec get_account_by(list()) :: {:ok, %Account{}} | {:error, binary()}
