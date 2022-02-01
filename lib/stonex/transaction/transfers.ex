@@ -1,28 +1,35 @@
-defmodule Stonex.Transaction.Transfer.Create do
+defmodule Stonex.Transaction.Transfers do
   @moduledoc """
-  Create é um módulo com o intuito de apresentar
-  uma interface mais simplificada para criar uma transação do tipo `transfer`.
+  Transfers contains the logic for transferring between accounts.
   """
-  alias Stonex.Repo
+
   alias Ecto.Multi
+  alias Stonex.Accounts
+  alias Stonex.Repo
+
   import Stonex.Transaction.Helpers
 
-  def call(params) do
+  @doc """
+  Creates a transfer between two accounts.
+  """
+  @spec create_transfer(map()) :: {:ok, binary()} | {:error, binary()}
+  def create_transfer(params) do
     with {:ok, validated_transfer_data} <-
-           check_if_requester_account_balance_is_zero(:transfer, params),
+           requester_account_balance_is_zero(:transfer, params),
          {:ok, requester_different_transfer_data} <-
-           check_if_requester_is_equal_beneficiary(validated_transfer_data),
+           requester_is_equal_beneficiary(validated_transfer_data),
          {:ok, tranfer_data} <- validate_beneficiary(requester_different_transfer_data),
-         {:ok, validated_transfer} <-
+         {:ok, validated_balance_transfer} <-
            validate_transferable_balance(tranfer_data),
          [beneficiary_changeset, requester_changeset] <-
-           create_updated_accounts_changesets(validated_transfer) do
+           create_updated_accounts_changesets(validated_balance_transfer) do
       Multi.new()
       |> Multi.update(:update_beneficiary_account, beneficiary_changeset)
       |> Multi.update(:update_requester_account, requester_changeset)
       |> Repo.transaction()
 
-      insert_transaction(:transfer, validated_transfer, :done, "transfer done")
+      insert_transaction(:transfer, validated_balance_transfer, :done, "transfer done")
+
       {:ok, "Transfer done successfully!"}
     end
   end
@@ -33,7 +40,8 @@ defmodule Stonex.Transaction.Transfer.Create do
            "document" => document
          } = params
        ) do
-    with {:ok, account} <- Stonex.get_account(%{branch: branch, digit: digit, number: number}),
+    with {:ok, account} <-
+           Accounts.get_account_by(%{branch: branch, digit: digit, number: number}),
          account_user_loaded <- Repo.preload(account, :user) do
       case user_document_is_valid?(account_user_loaded, document) do
         true ->
@@ -57,7 +65,7 @@ defmodule Stonex.Transaction.Transfer.Create do
     end
   end
 
-  defp check_if_requester_is_equal_beneficiary(
+  defp requester_is_equal_beneficiary(
          %{
            "document" => beneficiary_document,
            "requester_info" => %{"document" => requester_dcument}
@@ -113,7 +121,9 @@ defmodule Stonex.Transaction.Transfer.Create do
   end
 
   defp updated_changeset_account(id, balance) do
-    updated_changeset = Stonex.update_account(%{id: id, balance: balance})
+    {:ok, account} = Accounts.get_account_by_id(id)
+
+    updated_changeset = Accounts.update_account(account, %{id: id, balance: balance})
 
     updated_changeset
   end
