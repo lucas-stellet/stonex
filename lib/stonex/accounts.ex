@@ -50,6 +50,32 @@ defmodule Stonex.Accounts do
   end
 
   @doc """
+  Gets a single account by attrs.
+
+  Returns {:ok, %Account{}} if queries successfully and {:error, "No account found"} if not.
+
+  ## Parameters
+
+  `attrs`: The attributes of the account to get.
+
+  ## Examples
+
+      iex> Stonex.Account.get_account_by(%{name: "John Doe"})
+      {:ok, %User{}}
+
+      iex> Stonex.Account.get_account_by(%{name: "Unknown Person"})
+      {:error, "No user found}
+
+  """
+  @spec get_account_by(list()) :: {:ok, %Account{}} | {:error, binary()}
+  def get_account_by(attrs) do
+    case Repo.get_by(Account, attrs) do
+      nil -> {:error, "Account not found"}
+      user -> {:ok, user}
+    end
+  end
+
+  @doc """
   Creates a account.
 
   ## Parameters
