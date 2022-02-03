@@ -1,4 +1,7 @@
 defmodule Stonex.Factory do
+  @moduledoc """
+  Factory module to help create objects on tests.
+  """
   use ExMachina.Ecto, repo: Stonex.Repo
 
   alias Stonex.Accounts.Account
