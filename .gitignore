@@ -28,3 +28,5 @@ stonex-*.tar
 /priv/static/
 
 .elixir_ls
+
+.update-elixirls.sh
