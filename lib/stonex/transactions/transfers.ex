@@ -3,6 +3,17 @@ defmodule Stonex.Transactions.Transfers do
   Transfers contains the logic for transferring between accounts.
   """
 
+  @type t :: %{
+          account: %{
+            branch: binary(),
+            number: binary(),
+            digit: binary()
+          },
+          document: binary(),
+          value: binary() | Decimal.t(),
+          description?: binary()
+        }
+
   alias Ecto.Multi
   alias Stonex.Accounts
   alias Stonex.Repo
@@ -12,7 +23,7 @@ defmodule Stonex.Transactions.Transfers do
   @doc """
   Creates a transfer between two accounts.
   """
-  @spec create_transfer(map()) :: {:ok, binary()} | {:error, binary()}
+  @spec create_transfer(__MODULE__.t()) :: {:ok, binary()} | {:error, binary()}
   def create_transfer(params) do
     with {:ok, validated_transfer_data} <-
            requester_account_balance_is_zero(:transfer, params),
