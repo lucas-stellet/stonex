@@ -49,6 +49,29 @@ defmodule Stonex.AccountsTest do
     end
   end
 
+  describe "get_account_by/1" do
+    setup do
+      user = insert(:user)
+      account = insert(:account, %{user_id: user.id})
+
+      %{account: account}
+    end
+
+    test "expects returns a {:ok, %Account{}} when pass valid account atrribute", %{
+      account: account
+    } do
+      assert {:ok, retrieved_account} = Accounts.get_account_by(number: account.number)
+
+      assert retrieved_account.id == account.id
+    end
+
+    test "expects returns a {:error, 'Account not found'} when pass an invalid account atrribute" do
+      assert {:error, message} = Accounts.get_account_by(number: Faker.Util.format("%6d"))
+
+      assert message == "Account not found"
+    end
+  end
+
   describe "create_account/1" do
     setup do
       user = insert(:user)
@@ -101,6 +124,30 @@ defmodule Stonex.AccountsTest do
       assert {:ok, deleted_account} = Accounts.delete_account(account)
 
       assert deleted_account.id == account.id
+    end
+  end
+
+  describe "change_account/1" do
+    setup do
+      user = insert(:user)
+      account = insert(:account, %{user_id: user.id})
+
+      %{account: account}
+    end
+
+    test "expects update successfully an account with a updated changeset when pass a map with new balance value",
+         %{
+           account: account
+         } do
+      new_balance = 500
+
+      assert updated_changeset = Accounts.change_account(account, %{balance: new_balance})
+
+      assert updated_changeset.valid? == true
+
+      {:ok, updated_account} = Repo.update(updated_changeset)
+
+      assert Decimal.equal?(updated_account.balance, new_balance) == true
     end
   end
 end
