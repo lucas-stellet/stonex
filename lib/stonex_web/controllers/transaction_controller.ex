@@ -3,9 +3,9 @@ defmodule StonexWeb.TransactionController do
 
   action_fallback StonexWeb.FallbackController
 
-  alias Stonex.Transaction.Transfers
   alias Stonex.Accounts
   alias Stonex.Accounts.Account
+  alias Stonex.Transactions.Transfers
 
   def transfer(conn, params) do
     merged_params = merge_with_requester_account_data(conn, params)

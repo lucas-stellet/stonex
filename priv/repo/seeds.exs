@@ -1,4 +1,4 @@
-alias Stonex.Transaction
+alias Stonex.Transactions.Transaction
 alias Stonex.Repo
 
 # Cria o usuário Tony Stark e a conta bancária
