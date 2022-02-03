@@ -8,10 +8,8 @@ defmodule StonexWeb.TransactionController do
   alias Stonex.Transactions.Transfers
 
   def transfer(conn, params) do
-    merged_params = merge_with_requester_account_data(conn, params)
-
     with {:ok, message} <-
-           Transfers.create_transfer(merged_params) do
+           Transfers.create_transfer(params) do
       conn
       |> put_status(:ok)
       |> render("success.json", message: message)
@@ -19,48 +17,11 @@ defmodule StonexWeb.TransactionController do
   end
 
   def withdraw(conn, params) do
-    merged_params = merge_with_requester_account_data(conn, params)
-
     with {:ok, message} <-
-           Stonex.do_withdraw(merged_params) do
+           Stonex.do_withdraw(params) do
       conn
       |> put_status(:ok)
       |> render("success.json", message: message)
     end
-  end
-
-  defp merge_with_requester_account_data(conn, params) do
-    current_resource(conn)
-    |> load_account_data()
-    |> merge_requester_data_with_inital_data(params)
-  end
-
-  defp load_account_data({:ok, %{id: id} = requester_data}) do
-    {:ok, %Account{id: id, balance: balance}} = Accounts.get_account_by(user_id: id)
-
-    requester_data
-    |> Map.put(:account_id, id)
-    |> Map.put(:balance, balance)
-  end
-
-  defp merge_requester_data_with_inital_data(
-         %{
-           id: id,
-           balance: balance,
-           account_id: account_id,
-           email: email,
-           document: document
-         },
-         initial_data
-       ) do
-    Map.merge(initial_data, %{
-      "requester_info" => %{
-        "id" => id,
-        "balance" => balance,
-        "account_id" => account_id,
-        "email" => email,
-        "document" => document
-      }
-    })
   end
 end
