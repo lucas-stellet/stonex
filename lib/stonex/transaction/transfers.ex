@@ -41,7 +41,7 @@ defmodule Stonex.Transaction.Transfers do
          } = params
        ) do
     with {:ok, account} <-
-           Accounts.get_account_by(%{branch: branch, digit: digit, number: number}),
+           Accounts.get_account_by(branch: branch, digit: digit, number: number),
          account_user_loaded <- Repo.preload(account, :user) do
       case user_document_is_valid?(account_user_loaded, document) do
         true ->
@@ -123,7 +123,7 @@ defmodule Stonex.Transaction.Transfers do
   defp updated_changeset_account(id, balance) do
     {:ok, account} = Accounts.get_account_by_id(id)
 
-    updated_changeset = Accounts.update_account(account, %{id: id, balance: balance})
+    updated_changeset = Accounts.change_account(account, %{balance: balance})
 
     updated_changeset
   end
