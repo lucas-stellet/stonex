@@ -11,7 +11,7 @@ defmodule StonexWeb.BodyGuard do
   def call(%{path_info: ["api", "backoffice", _]} = conn, _opts) do
     case user_is_admin?(current_resource(conn)) do
       true ->
-        conn
+        merge_conn_assigns_with_requester_user(conn)
 
       false ->
         response = %{"message" => "Unauthorized"}
@@ -26,7 +26,7 @@ defmodule StonexWeb.BodyGuard do
   def call(%{path_info: ["api", "transaction", _]} = conn, _opts) do
     case user_is_admin?(current_resource(conn)) do
       false ->
-        conn
+        merge_conn_assigns_with_requester_user(conn)
 
       true ->
         response = %{"message" => "Only users with account can do transactions."}
@@ -36,6 +36,13 @@ defmodule StonexWeb.BodyGuard do
         |> send_resp(403, Poison.encode!(response))
         |> halt()
     end
+  end
+
+  defp merge_conn_assigns_with_requester_user(conn) do
+    {:ok, user} = current_resource(conn)
+
+    user
+    |> Stonex.Repo.preload(:account)
   end
 
   defp user_is_admin?({:ok, %{role: :admin}}), do: true
