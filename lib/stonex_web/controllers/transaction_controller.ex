@@ -3,11 +3,15 @@ defmodule StonexWeb.TransactionController do
 
   action_fallback StonexWeb.FallbackController
 
+  alias Stonex.Transaction.Transfers
+  alias Stonex.Accounts
+  alias Stonex.Accounts.Account
+
   def transfer(conn, params) do
     merged_params = merge_with_requester_account_data(conn, params)
 
     with {:ok, message} <-
-           Stonex.do_transfer(merged_params) do
+           Transfers.create_transfer(merged_params) do
       conn
       |> put_status(:ok)
       |> render("success.json", message: message)
@@ -32,7 +36,7 @@ defmodule StonexWeb.TransactionController do
   end
 
   defp load_account_data({:ok, %{id: id} = requester_data}) do
-    {:ok, %{id: id, balance: balance}} = Stonex.get_account(user_id: id)
+    {:ok, %Account{id: id, balance: balance}} = Accounts.get_account_by(user_id: id)
 
     requester_data
     |> Map.put(:account_id, id)

@@ -20,7 +20,7 @@ defmodule StonexWeb.Auth.Guardian do
   end
 
   def authenticate(%{"document" => document, "password" => password}) do
-    case Users.get_user_by(%{document: document}) do
+    case Users.get_user_by(document: document) do
       {:error, _} ->
         {:error, "Account not found!"}
 
@@ -30,7 +30,7 @@ defmodule StonexWeb.Auth.Guardian do
   end
 
   def backoffice_authenticate(%{"document" => document, "password" => password}) do
-    with {:ok, user} <- Users.get_user_by(%{document: document}),
+    with {:ok, user} <- Users.get_user_by(document: document),
          {:ok, _user_admin} <- validate_admin_role(user) do
       validate_password(user, password)
     end
