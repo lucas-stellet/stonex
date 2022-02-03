@@ -138,4 +138,22 @@ defmodule Stonex.Accounts do
   def delete_account(%Account{} = account) do
     Repo.delete(account)
   end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking account changes.
+
+  ## Parameters
+  `account`: The account to change.
+  `attrs`: The attributes of the account to create.
+
+  ## Examples
+
+      iex> Stonex.Accounts.change_account(account, %{balance: Decimal.new(100)})
+      {:ok, %Ecto.Changeset{}}
+
+  """
+  @spec change_account(%Account{}, map()) :: %Ecto.Changeset{}
+  def change_account(%Account{} = account, attrs) do
+    Account.changeset(account, attrs)
+  end
 end
