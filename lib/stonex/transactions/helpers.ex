@@ -1,9 +1,9 @@
-defmodule Stonex.Transaction.Helpers do
+defmodule Stonex.Transactions.Helpers do
   @moduledoc """
   Function helpers for transactions.
   """
-  alias Stonex.Transaction
   alias Stonex.Repo
+  alias Stonex.Transactions.Transaction
 
   def requester_account_balance_is_zero(
         type,

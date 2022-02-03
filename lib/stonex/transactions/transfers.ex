@@ -1,4 +1,4 @@
-defmodule Stonex.Transaction.Transfers do
+defmodule Stonex.Transactions.Transfers do
   @moduledoc """
   Transfers contains the logic for transferring between accounts.
   """
@@ -7,7 +7,7 @@ defmodule Stonex.Transaction.Transfers do
   alias Stonex.Accounts
   alias Stonex.Repo
 
-  import Stonex.Transaction.Helpers
+  import Stonex.Transactions.Helpers
 
   @doc """
   Creates a transfer between two accounts.

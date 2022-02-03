@@ -1,4 +1,4 @@
-defmodule Stonex.Transaction do
+defmodule Stonex.Transactions.Transaction do
   @moduledoc """
   Schema for transactions
   """
