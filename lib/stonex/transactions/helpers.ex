@@ -7,13 +7,13 @@ defmodule Stonex.Transactions.Helpers do
 
   def requester_account_balance_is_zero(
         type,
-        %{"requester_info" => %{"balance" => balance}} = params
+        %{requester_data: %{account: %{balance: requester_balance}}} = params
       ) do
-    case Decimal.gt?(balance, 0) do
+    case Decimal.gt?(requester_balance, 0) do
       false ->
         insert_transaction(
           type,
-          Map.put(params, "id", params["requester_info"]["id"]),
+          params,
           :failed,
           "zero balance"
         )
@@ -26,11 +26,14 @@ defmodule Stonex.Transactions.Helpers do
   end
 
   def insert_transaction(:transfer, params, status, observation) do
+    requester_data = params.requester_data
+    beneficiary_data = params.beneficiary_data
+
     {:ok, transaction} =
       %{
-        value: params["value"],
-        beneficiary_id: params["id"],
-        requester_id: params["requester_info"]["id"],
+        value: params.value,
+        beneficiary_id: Map.get(beneficiary_data, :account_id),
+        requester_id: requester_data.account.id,
         type: "transfer",
         status: status,
         observation: observation,
@@ -66,6 +69,16 @@ defmodule Stonex.Transactions.Helpers do
   end
 
   def put_multiple_recursive(map, []), do: map
+
+  def put_multiple_recursive(map, [{_key, []}]), do: map
+
+  def put_multiple_recursive(map, [{key, [{k, v} | kv_tl]} | tl]) do
+    key_map_to_update = Map.get(map, key)
+
+    Map.put(map, key, Map.put(key_map_to_update, k, v))
+    |> put_multiple_recursive([{key, kv_tl}])
+    |> put_multiple_recursive(tl)
+  end
 
   def put_multiple_recursive(map, [{key, value} | tl]) do
     Map.put(map, key, value)
