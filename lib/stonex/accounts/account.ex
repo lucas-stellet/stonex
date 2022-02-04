@@ -12,7 +12,7 @@ defmodule Stonex.Accounts.Account do
   schema "accounts" do
     field :balance, :decimal, precision: 10, scale: 2, default: 1000
     field :number, :string
-    field :branch, :string, default: "1000"
+    field :branch, :string, default: "0001"
     field :digit, :string
 
     belongs_to :user, Stonex.Users.User
@@ -33,13 +33,17 @@ defmodule Stonex.Accounts.Account do
     |> apply_action(:insert)
   end
 
-  @spec changeset(struct(), map()) :: %Ecto.Changeset{}
-  def changeset(account \\ %__MODULE__{}, attrs) do
-    account
-    |> cast(attrs, [:user_id, :branch, :balance])
-    |> validate_required([:user_id])
+  @spec changeset(map() | struct(), map()) :: %Ecto.Changeset{}
+  def changeset(attrs) do
+    %__MODULE__{}
+    |> cast(attrs, [:balance, :user_id, :branch])
     |> put_change(:number, create_account_number())
     |> put_change(:digit, create_account_digit())
+  end
+
+  def changeset(account, attrs) do
+    account
+    |> cast(attrs, [:balance])
   end
 
   defp create_account_number, do: Integer.to_string(Enum.random(100_000..999_999))

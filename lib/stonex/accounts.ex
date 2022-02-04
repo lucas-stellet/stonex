@@ -50,6 +50,32 @@ defmodule Stonex.Accounts do
   end
 
   @doc """
+  Gets a single account by attrs.
+
+  Returns {:ok, %Account{}} if queries successfully and {:error, "No account found"} if not.
+
+  ## Parameters
+
+  `attrs`: The attributes of the account to get.
+
+  ## Examples
+
+      iex> Stonex.Account.get_account_by(%{number: 795686})
+      {:ok, %Account{}}
+
+      iex> Stonex.Account.get_account_by(%{number: 000000})
+      {:error, "No account found}
+
+  """
+  @spec get_account_by(list()) :: {:ok, %Account{}} | {:error, binary()}
+  def get_account_by(attrs) do
+    case Repo.get_by(Account, attrs) do
+      nil -> {:error, "Account not found"}
+      user -> {:ok, user}
+    end
+  end
+
+  @doc """
   Creates a account.
 
   ## Parameters
@@ -111,5 +137,23 @@ defmodule Stonex.Accounts do
   @spec delete_account(%Account{}) :: {:ok, %Account{}} | {:error, %Ecto.Changeset{}}
   def delete_account(%Account{} = account) do
     Repo.delete(account)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking account changes.
+
+  ## Parameters
+  `account`: The account to change.
+  `attrs`: The attributes of the account to create.
+
+  ## Examples
+
+      iex> Stonex.Accounts.change_account(account, %{balance: Decimal.new(100)})
+      {:ok, %Ecto.Changeset{}}
+
+  """
+  @spec change_account(%Account{}, map()) :: %Ecto.Changeset{}
+  def change_account(%Account{} = account, attrs) do
+    Account.changeset(account, attrs)
   end
 end

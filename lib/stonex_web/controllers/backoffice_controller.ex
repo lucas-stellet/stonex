@@ -3,8 +3,10 @@ defmodule StonexWeb.BackofficeController do
 
   action_fallback StonexWeb.FallbackController
 
+  alias Stonex.Users
+
   def create(conn, params) do
-    with {:ok, user} <- Stonex.create_user(Map.put(params, "role", "admin")) do
+    with {:ok, user} <- Users.create_user(Map.put(params, "role", "admin")) do
       conn
       |> put_status(:created)
       |> render("create.json", %{user: user})

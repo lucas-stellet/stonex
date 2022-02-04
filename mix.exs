@@ -58,7 +58,8 @@ defmodule Stonex.MixProject do
       {:timex, "~> 3.0"},
       {:ex_machina, "~> 2.7.0", only: :test},
       {:excoveralls, "~> 0.10", only: :test},
-      {:faker, "~> 0.17", only: :test}
+      {:faker, "~> 0.17", only: :test},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
     ]
   end
 

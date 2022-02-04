@@ -4,14 +4,16 @@ defmodule Stonex.Transaction.Withdraw.Create do
   uma interface mais simplificada para criar uma transação do tipo `widhdraw`.
   """
 
-  alias Stonex.Repo
   alias Ecto.Multi
-  import Stonex.Transaction.Helpers
+  alias Stonex.Repo
+
+  import Stonex.Transactions.Helpers
+
   require Logger
 
   def call(params) do
     with {:ok, validated_withdraw_data} <-
-           check_if_requester_account_balance_is_zero(:withdraw, params),
+           requester_account_balance_is_zero(:withdraw, params),
          {:ok, validated_withdraw} <- validate_withdrawable_balance(validated_withdraw_data),
          {:ok, requester_changeset} <- create_updated_account_changeset(validated_withdraw) do
       Multi.new()
@@ -58,11 +60,8 @@ defmodule Stonex.Transaction.Withdraw.Create do
     {:ok, requester_changeset}
   end
 
-  defp updated_changeset_account(id, balance) do
-    updated_changeset = Stonex.update_account(%{id: id, balance: balance})
-
-    updated_changeset
-  end
+  defp updated_changeset_account(id, balance),
+    do: Accoounts.update_account(%{id: id, balance: balance})
 
   defp send_email_confirmation(%{"requester_info" => %{"email" => email}}) do
     Logger.debug(~s"""

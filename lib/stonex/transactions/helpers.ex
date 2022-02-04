@@ -1,19 +1,19 @@
-defmodule Stonex.Transaction.Helpers do
+defmodule Stonex.Transactions.Helpers do
   @moduledoc """
   Function helpers for transactions.
   """
-  alias Stonex.Transaction
   alias Stonex.Repo
+  alias Stonex.Transactions.Transaction
 
-  def check_if_requester_account_balance_is_zero(
+  def requester_account_balance_is_zero(
         type,
-        %{"requester_info" => %{"balance" => balance}} = params
+        %{requester_data: %{account_balance: account_balance}} = params
       ) do
-    case Decimal.gt?(balance, 0) do
+    case Decimal.gt?(account_balance, 0) do
       false ->
         insert_transaction(
           type,
-          Map.put(params, "id", params["requester_info"]["id"]),
+          params,
           :failed,
           "zero balance"
         )
@@ -26,15 +26,18 @@ defmodule Stonex.Transaction.Helpers do
   end
 
   def insert_transaction(:transfer, params, status, observation) do
+    requester_data = params.requester_data
+    beneficiary_data = params.beneficiary_data
+
     {:ok, transaction} =
       %{
-        value: params["value"],
-        beneficiary_id: params["id"],
-        requester_id: params["requester_info"]["id"],
+        value: params.value,
+        beneficiary_id: Map.get(beneficiary_data, :account_id),
+        requester_id: requester_data.account_id,
         type: "transfer",
         status: status,
         observation: observation,
-        description: params["description"]
+        description: params.description
       }
       |> Transaction.build()
 
@@ -42,15 +45,17 @@ defmodule Stonex.Transaction.Helpers do
   end
 
   def insert_transaction(:withdraw, params, status, observation) do
+    requester_data = params.requester_data
+
     {:ok, transaction} =
       %{
-        value: params["value"],
-        beneficiary_id: params["requester_info"]["id"],
-        requester_id: params["requester_info"]["id"],
+        value: params.value,
+        beneficiary_id: requester_data.id,
+        requester_id: requester_data.id,
         type: "withdraw",
         status: status,
         observation: observation,
-        description: params["description"]
+        description: params.description
       }
       |> Transaction.build()
 
@@ -66,6 +71,16 @@ defmodule Stonex.Transaction.Helpers do
   end
 
   def put_multiple_recursive(map, []), do: map
+
+  def put_multiple_recursive(map, [{_key, []}]), do: map
+
+  def put_multiple_recursive(map, [{key, [{k, v} | kv_tl]} | tl]) do
+    key_map_to_update = Map.get(map, key)
+
+    Map.put(map, key, Map.put(key_map_to_update, k, v))
+    |> put_multiple_recursive([{key, kv_tl}])
+    |> put_multiple_recursive(tl)
+  end
 
   def put_multiple_recursive(map, [{key, value} | tl]) do
     Map.put(map, key, value)

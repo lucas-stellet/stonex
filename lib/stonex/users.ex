@@ -59,10 +59,10 @@ defmodule Stonex.Users do
 
   ## Examples
 
-      iex> Stonex.Users.get_by(%{name: "John Doe"})
+      iex> Stonex.Users.get_user_by(%{name: "John Doe"})
       {:ok, %User{}}
 
-      iex> Stonex.Users.get_by(%{name: "Unknown Person"})
+      iex> Stonex.Users.get_user_by(%{name: "Unknown Person"})
       {:error, "No user found}
 
   """
