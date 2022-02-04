@@ -4,7 +4,7 @@
 
 A API está disponível no endereço abaixo:
 
-[stonex.jaspion.xyz/api](http://stonex.jaspion.xyz/api)
+[stonex.gigalixirapp.com/api](https://stonex.gigalixirapp.com/api)
 
 Para facilitar o acesso, alguns usuários e suas respectivas contas, exceto usuários do backoffice, foram criados. Assim como transações do tipo saque ou retirada, que foram persistidas em períodos distintos para ter a possibilidade de visualização de relatórios.
 
@@ -16,9 +16,9 @@ Para facilitar o acesso, alguns usuários e suas respectivas contas, exceto usu�
   "password": "10203040",
   "document": "001.002.003-04"
   "account": {
-      "number": "384030",
+      "number": "667179",
       "branch": "0001",
-      "digit": "3"
+      "digit": "6"
   }
 }
 
@@ -29,9 +29,9 @@ Para facilitar o acesso, alguns usuários e suas respectivas contas, exceto usu�
   "password": "50607080",
   "document": "005.006.007-08",
   "account": {
-      "number": "994427",
+      "number": "971188",
       "branch": "0001",
-      "digit": "9"
+      "digit": "8"
   }
 }
 
