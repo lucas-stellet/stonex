@@ -21,7 +21,7 @@ defmodule Stonex.Transactions.TransfersTest do
     }
   end
 
-  describe "create_transfer/1" do
+  describe "do_transfer/1" do
     setup %{user_1: user_1, user_2: user_2, account_1: account_1, account_2: account_2} = ctx do
       %{
         transfer: %{
