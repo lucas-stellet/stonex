@@ -1,7 +1,7 @@
 alias Stonex.Transactions.Transaction
 alias Stonex.Repo
 
-# Cria o usuário Tony Stark e a conta bancária
+# Create Tony Stasl user and his back accoun
 
 {:ok, %{id: tony_stark_id}} =
   Stonex.Users.create_user(%{
@@ -14,7 +14,7 @@ alias Stonex.Repo
 
 {:ok, %{id: tony_stark_account_id}} = Stonex.Accounts.create_account(%{user_id: tony_stark_id})
 
-# Cria o usuário Peter Park e a conta bancária
+# Create Peter Parker user and his back account
 
 {:ok, %{id: peter_parker_id}} =
   Stonex.Users.create_user(%{
@@ -28,7 +28,7 @@ alias Stonex.Repo
 {:ok, %{id: peter_parker_account_id}} =
   Stonex.Accounts.create_account(%{user_id: peter_parker_id})
 
-# Cria o usuário admin Nick fury
+# Create Nick Fury backoffice user
 
 Stonex.Users.create_user(%{
   "first_name" => "Nick",
@@ -38,80 +38,3 @@ Stonex.Users.create_user(%{
   "document" => "000.001.002-00",
   "role" => "admin"
 })
-
-# Cria tranferências bancárias de Tony Stark para Peter Park afim de popular a tabela de transações
-
-{:ok, t1} =
-  Transaction.build(%{
-    status: :done,
-    type: :transfer,
-    description: "nothing",
-    value: 40.00,
-    beneficiary_id: peter_parker_id,
-    requester_id: tony_stark_id,
-    observation: "done"
-  })
-
-Repo.insert!(t1)
-
-{:ok, t2} =
-  Transaction.build(%{
-    status: :done,
-    type: :transfer,
-    description: "nothing",
-    value: 30.00,
-    beneficiary_id: peter_parker_id,
-    requester_id: tony_stark_id,
-    observation: "done"
-  })
-
-Repo.insert!(t2)
-
-{:ok, t3} =
-  Transaction.build(%{
-    status: :done,
-    type: :transfer,
-    description: "nothing",
-    value: 50.00,
-    beneficiary_id: peter_parker_id,
-    requester_id: tony_stark_id,
-    observation: "done"
-  })
-
-Repo.insert!(t3)
-
-{:ok, t4} =
-  Transaction.build(%{
-    status: :done,
-    type: :transfer,
-    description: "nothing",
-    value: 200.00,
-    beneficiary_id: peter_parker_id,
-    requester_id: tony_stark_id,
-    observation: "done"
-  })
-
-Repo.insert!(t4)
-
-{:ok, t5} =
-  Transaction.build(%{
-    status: :done,
-    type: :transfer,
-    description: "nothing",
-    value: 100.00,
-    beneficiary_id: peter_parker_id,
-    requester_id: tony_stark_id,
-    observation: "done"
-  })
-
-Repo.insert!(t5)
-
-# Atualiza as contas do Peter Parker e do Tony Stark
-
-# tony_updated_account = Stonex.update_account(%{id: tony_stark_account_id, balance: 580.00})
-
-# Repo.update!(tony_updated_account)
-
-# peter_updated_account = Stonex.update_account(%{id: peter_parker_account_id, balance: 1420.00})
-
-# Repo.update!(peter_updated_account)
