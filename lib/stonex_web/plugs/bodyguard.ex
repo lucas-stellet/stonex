@@ -11,7 +11,7 @@ defmodule StonexWeb.BodyGuard do
   def call(%{path_info: ["api", "backoffice", _]} = conn, _opts) do
     case user_is_admin?(current_resource(conn)) do
       true ->
-        merge_conn_assigns_with_requester_user(conn)
+        conn
 
       false ->
         response = %{"message" => "Unauthorized"}
