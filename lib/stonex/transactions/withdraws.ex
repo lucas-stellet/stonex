@@ -43,7 +43,7 @@ defmodule Stonex.Transactions.Withdraws do
       true ->
         insert_transaction(:withdraw, params, :failed, "insufficient funds")
 
-        {:error, "Was not possible complete your withdraw.Insufficient funds!"}
+        {:error, "Was not possible complete your withdraw. Insufficient funds!"}
     end
   end
 
