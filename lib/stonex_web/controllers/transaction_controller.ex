@@ -3,17 +3,21 @@ defmodule StonexWeb.TransactionController do
 
   action_fallback StonexWeb.FallbackController
 
-  alias Stonex.Accounts
-  alias Stonex.Accounts.Account
   alias Stonex.Transactions.Transfers
+  alias Stonex.Transactions.Transfers.Transfer
 
   def transfer(conn, params) do
-    with {:ok, message} <-
-           Transfers.create_transfer(params) do
+    transfer_attrs = Map.merge(params, conn.assigns)
+
+    with transfer_struct <- Transfer.build(transfer_attrs),
+         {:ok, message} <- Transfers.do_transfer(transfer_struct) do
       conn
       |> put_status(:ok)
       |> render("success.json", message: message)
     end
+
+    # rescue
+    #   e in ArgumentError -> {:error, e.message}
   end
 
   def withdraw(conn, params) do

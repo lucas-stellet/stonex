@@ -8,7 +8,7 @@ defmodule Stonex.Transactions.Transaction do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type Ecto.UUID
 
-  @required_fields ~w( value status beneficiary_id requester_id type)a
+  @required_fields ~w( value status requester_id type beneficiary_id)a
   @optional_fields ~w( observation description )a
 
   schema "transactions" do

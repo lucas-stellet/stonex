@@ -41,8 +41,21 @@ defmodule StonexWeb.BodyGuard do
   defp merge_conn_assigns_with_requester_user(conn) do
     {:ok, user} = current_resource(conn)
 
-    user
-    |> Stonex.Repo.preload(:account)
+    {:ok, account} = Stonex.Accounts.get_account_by(user_id: user.id)
+
+    requester_data = %{
+      document: user.document,
+      email: user.email,
+      id: user.id,
+      role: user.role,
+      account_id: account.id,
+      account_digit: account.digit,
+      account_branch: account.branch,
+      account_number: account.number,
+      account_balance: account.balance
+    }
+
+    assign(conn, :requester_data, requester_data)
   end
 
   defp user_is_admin?({:ok, %{role: :admin}}), do: true

@@ -7,9 +7,9 @@ defmodule Stonex.Transactions.Helpers do
 
   def requester_account_balance_is_zero(
         type,
-        %{requester_data: %{account: %{balance: requester_balance}}} = params
+        %{requester_data: %{account_balance: account_balance}} = params
       ) do
-    case Decimal.gt?(requester_balance, 0) do
+    case Decimal.gt?(account_balance, 0) do
       false ->
         insert_transaction(
           type,
@@ -33,11 +33,11 @@ defmodule Stonex.Transactions.Helpers do
       %{
         value: params.value,
         beneficiary_id: Map.get(beneficiary_data, :account_id),
-        requester_id: requester_data.account.id,
+        requester_id: requester_data.account_id,
         type: "transfer",
         status: status,
         observation: observation,
-        description: params["description"]
+        description: params.description
       }
       |> Transaction.build()
 
@@ -45,15 +45,17 @@ defmodule Stonex.Transactions.Helpers do
   end
 
   def insert_transaction(:withdraw, params, status, observation) do
+    requester_data = params.requester_data
+
     {:ok, transaction} =
       %{
-        value: params["value"],
-        beneficiary_id: params["requester_info"]["id"],
-        requester_id: params["requester_info"]["id"],
+        value: params.value,
+        beneficiary_id: requester_data.id,
+        requester_id: requester_data.id,
         type: "withdraw",
         status: status,
         observation: observation,
-        description: params["description"]
+        description: params.description
       }
       |> Transaction.build()
 
@@ -91,6 +93,8 @@ defmodule Stonex.Transactions.Helpers do
   end
 
   def update_requester_balance(balance, value) do
+    IO.inspect(value)
+
     Decimal.sub(balance, Decimal.new(value))
     |> Decimal.to_float()
   end
