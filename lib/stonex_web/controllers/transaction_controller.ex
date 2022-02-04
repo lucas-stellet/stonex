@@ -5,6 +5,8 @@ defmodule StonexWeb.TransactionController do
 
   alias Stonex.Transactions.Transfers
   alias Stonex.Transactions.Transfers.Transfer
+  alias Stonex.Transactions.Withdraws
+  alias Stonex.Transactions.Withdraws.Withdraw
 
   def transfer(conn, params) do
     transfer_attrs = Map.merge(params, conn.assigns)
@@ -15,14 +17,16 @@ defmodule StonexWeb.TransactionController do
       |> put_status(:ok)
       |> render("success.json", message: message)
     end
-
-    # rescue
-    #   e in ArgumentError -> {:error, e.message}
+  rescue
+    e in ArgumentError -> {:error, e.message}
   end
 
   def withdraw(conn, params) do
-    with {:ok, message} <-
-           Stonex.do_withdraw(params) do
+    withdraw_attrs = Map.merge(params, conn.assigns)
+
+    with withdraw_struct <- Withdraw.build(withdraw_attrs),
+         {:ok, message} <-
+           Withdraws.do_withdraw(withdraw_struct) do
       conn
       |> put_status(:ok)
       |> render("success.json", message: message)
