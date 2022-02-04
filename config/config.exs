@@ -17,7 +17,7 @@ config :stonex, StonexWeb.Endpoint,
   secret_key_base: "058KKrGl3NKgJj7KuJrmNXyN1SyKxY5BgBrATpKQxgmYTTGP2ftNQGvWg2EKQ0B3",
   render_errors: [view: StonexWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: Stonex.PubSub,
-  force_ssl: [rewrite_on: [:x_forwarded_proto], host: nil],
+  # force_ssl: [rewrite_on: [:x_forwarded_proto], host: nil],
   # https: [
   #   port: 443,
   #   cipher_suite: :strong,
