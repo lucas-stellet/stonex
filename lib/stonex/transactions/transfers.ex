@@ -93,7 +93,6 @@ defmodule Stonex.Transactions.Transfers do
   defp user_document_is_valid?(%{user: user}, document), do: user.document == document
 
   defp create_updated_accounts_changesets(params) do
-    IO.puts("heeere")
     requester_data = params.requester_data
     beneficiary_data = params.beneficiary_data
 

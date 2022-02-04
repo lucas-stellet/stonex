@@ -93,8 +93,6 @@ defmodule Stonex.Transactions.Helpers do
   end
 
   def update_requester_balance(balance, value) do
-    IO.inspect(value)
-
     Decimal.sub(balance, Decimal.new(value))
     |> Decimal.to_float()
   end
