@@ -3,6 +3,7 @@ defmodule StonexWeb.BackofficeController do
 
   action_fallback StonexWeb.FallbackController
 
+  alias Stonex.Backoffice.Reports
   alias Stonex.Users
 
   def create(conn, params) do
@@ -14,7 +15,7 @@ defmodule StonexWeb.BackofficeController do
   end
 
   def reports(conn, %{"type" => "range", "from" => from, "to" => to}) do
-    with {:ok, report} <- Stonex.get_reports(%{type: "range", from: from, to: to}) do
+    with {:ok, report} <- Reports.create(%{type: "range", from: from, to: to}) do
       conn
       |> put_status(:ok)
       |> render("report.json", %{report: report})
@@ -28,7 +29,7 @@ defmodule StonexWeb.BackofficeController do
   end
 
   def reports(conn, %{"type" => type}) do
-    with {:ok, report} <- Stonex.get_reports(%{type: type, from: nil, to: nil}) do
+    with {:ok, report} <- Reports.create(%{type: type, from: nil, to: nil}) do
       conn
       |> put_status(:ok)
       |> render("report.json", %{report: report})
